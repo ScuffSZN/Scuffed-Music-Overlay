@@ -155,3 +155,18 @@ div.card {
 .hidden {
     left: -500px;
 }
+
+
+
+.dark {
+    background-color: #202124 !important;
+    color: #fff;
+}
+
+.dark .card-body-progressbar {
+    background-color: rgba(235, 235, 235, 0.5);
+}
+
+.dark .card-body-progressbar-inner {
+    background-color: #7823e4;
+}

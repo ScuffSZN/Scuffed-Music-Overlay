@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="style.css">
   </head>
   <body>
-    <div class="card mr hidden">
+    <div class="card mr dark hidden">
       <div class="card-images"></div>
       <div class="card-body">
         <div class="card-body-title">Loading</div>
@@ -36,10 +36,8 @@
         //console.log(jsonData)
         title.innerHTML = jsonData.title;
         artist.innerHTML = jsonData.artist;
-        time.innerHTML = jsonData.time;
-
+        time.innerHTML = jsonData.time+" / "+jsonData.dur;
         progress.style.width = ((hms(jsonData.time)/hms(jsonData.dur))*100) + "%";
-
         if(jsonData.state == "1") {
           card.classList.remove('hidden');
         } else if(jsonData.state == "2") {
