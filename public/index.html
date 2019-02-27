@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Radio</title>
+    <link rel="stylesheet" href="style.css">
+  </head>
+  <body>
+    <div class="card mr hidden">
+      <div class="card-images"></div>
+      <div class="card-body">
+        <div class="card-body-title">Loading</div>
+        <div class="card-body-album">...</div>
+        <div class="card-body-time">
+          <span>0:00</span>
+          <div class="card-body-progressbar"></div>
+          <div class="card-body-progressbar-inner"></div>
+        </div>
+      </div>
+    </div>
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+
+  var title = document.querySelector(".card-body-title"),
+      card = document.querySelector(".mr"),
+      artist = document.querySelector(".card-body-album"),
+      time = document.querySelector(".card-body-time span"),
+      progress = document.querySelector(".card-body-progressbar-inner");//hms
+
+
+    var socket = io.connect('http://localhost:8080');
+
+    socket.on('message', function (data) {
+        jsonData = JSON.parse(data);
+        //console.log(jsonData)
+        title.innerHTML = jsonData.title;
+        artist.innerHTML = jsonData.artist;
+        time.innerHTML = jsonData.time;
+
+        progress.style.width = ((hms(jsonData.time)/hms(jsonData.dur))*100) + "%";
+
+        if(jsonData.state == "1") {
+          card.classList.remove('hidden');
+        } else if(jsonData.state == "2") {
+          card.classList.add('hidden');
+        }
+    });
+
+    function hms(str) {
+        var p = str.split(':'),
+            s = 0, m = 1;
+
+        while (p.length > 0) {
+            s += m * parseInt(p.pop(), 10);
+            m *= 60;
+        }
+
+        return s;
+    }
+    </script>
+  </body>
+</html>
+
+

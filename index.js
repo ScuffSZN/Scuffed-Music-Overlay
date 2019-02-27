@@ -1,71 +1,60 @@
-const YouTube = require('youtube-live-chat');
-
-
-var app = require('express')();
+const WebSocket = require('ws');
+var express = require('express');
+var app = express();
 var server = require('http').Server(app);
-var io = require('socket.io')(server);
-//const yt = new YouTube('UCStEQ9BjMLjHTHLNA6cY9vg', 'AIzaSyBnFk3EyETPxEwHn8iO438n9W1JuLc7kGc');
-//const yt = new YouTube('UCStEQ9BjMLjHTHLNA6cY9vg', 'AIzaSyAKvXaBGlUpoBbRogd4S7gol4PaOvD7erk');
-//const yt = new YouTube('UCNNTZgxNQuBrhbO0VrG8woA', 'AIzaSyAEjf7QlUE6aKHaeHXWAJgU6Dd0hDkp0f4');
-const yt = new YouTube('UCPkOhci8gkwL7p6hxIJ2WQw', 'AIzaSyCCeUAQ0R_LpUnVZrQhl3K0lkgNjoHRgNw');
- 
+var io = require('socket.io')(server); 
 
+var json = {
+    "title": "",
+    "artist": "",
+    "dur": "",
+    "time": "",
+    "state": 2,
+}
+
+const wss = new WebSocket.Server({ port: 8974 });
+ 
+wss.on('connection', function connection(ws) {
+  ws.on('message', function incoming(message) {
+    //console.log('received: %s', message);
+
+    if(message.split(/:(.+)/)[0] == "TITLE")
+        json.title = message.split(/:(.+)/)[1];
+
+    if(message.split(/:(.+)/)[0] == "ARTIST")
+        json.artist = message.split(/:(.+)/)[1]
+
+    if(message.split(/:(.+)/)[0] == "DURATION")
+        json.dur = message.split(/:(.+)/)[1];
+
+    if(message.split(/:(.+)/)[0] == "POSITION")
+        json.time = message.split(/:(.+)/)[1];
+
+    if(message.split(/:(.+)/)[0] == "STATE")
+        json.state = message.split(/:(.+)/)[1];    
+  }); 
+});
 
 server.listen(8080);
 
+app.use(express.static('public'))
+
 app.get('/', function (req, res) {
-  res.sendFile(__dirname + '/index.html');
+    res.sendFile(__dirname + '/index.html');
 });
-
-
-var bannedWords = ["ice_posiedon2", "IP2", "iceposeidon_2", "ICP2", "ice_poseidon3", "Ice Poseidon 2","ICE_POSEIDON2"];
-
-yt.on('ready', () => {
-  console.log('ready!')
-  yt.listen(2500)
-})
- 
-yt.on('message', data => {
-  json = {
-    "name": data.authorDetails.displayName,
-    "message": data.snippet.displayMessage
-  }
-
-    result = containsAny(data.snippet.displayMessage, bannedWords)
-
-  if(result == null) {
-    //console.log(JSON.stringify(json))
-    io.emit('message', JSON.stringify(json));
-  }
-})
- 
-yt.stop();
-
-yt.on('error', error => {
-  console.error(error)
-})
-
-
-function containsAny(str, substrings) {
-  for (var i = 0; i != substrings.length; i++) {
-     var substring = substrings[i].toLowerCase();
-     str = str.toLowerCase();
-     if (str.indexOf(substring) != - 1) {
-       return substring;
-     }
-  }
-  return null; 
-}
-
-
-
+  
 
 
 io.on('connection', function (socket) {
-  socket.emit('ping', {status: "connect"});
-  socket.on('pong', function (data) {
-    console.log(data);
+    socket.emit('ping', {status: "connect"});
+    socket.on('pong', function (data) {
+      //console.log(data);
+    });
   });
-});
+  
+  
 
-
+setInterval(function(){
+    io.emit('message', JSON.stringify(json));
+    //console.log(json)
+},1000)

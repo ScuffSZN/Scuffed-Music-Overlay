@@ -1,0 +1,157 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,500,500i,700,700i|Roboto+Mono:300,400,500|Google+Sans:300,400,500,600|Material+Icons|Google+Sans+Display:400,500');
+
+html,
+body {
+    height: 100%;
+}
+
+body {
+    font-family: Google Sans;
+    padding: 0px;
+    font-size: 18px;
+    margin: 0;
+    color: #000000;
+}
+
+h1 {
+    font-size: 32px;
+}
+
+div.bg {
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-image: url(https://i.imgur.com/r1usM.jpg);
+    position: absolute;
+    top: 0px;
+    bottom: 0px;
+    left: 0px;
+    right: 0px;
+    opacity: .75;
+    transition: 5s ease-in-out;
+}
+
+
+.mr {
+    position: absolute;
+    bottom: 0px;
+    left: 0px;
+    height: 55px;
+    transition:left 1s ease-in-out;
+}
+
+
+div.card {
+    margin: 10px;
+    padding: 10px;
+    display: inline-block;
+    box-shadow: 0 10px 43px 0 rgba(0, 0, 0, .2);
+    background-color: #ffffff;
+    border-radius: 15px;
+}
+
+.card .card-images {
+    display: none;
+    height: 55px;
+    width: 55px;
+    border-radius: 15px;
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-image: url(https://recordsale.de/assets/record_placeholder-f3f829566497dc26b0abfae50ddeb5c7bc48fe1c58dc1c7fe62a26d64988b9c9.svg);
+    float: left;
+    transition: .5s ease-in-out;
+}
+
+.card .card-body {
+    display: inline-block;
+    padding-left: 10px;
+    padding-right: 10px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 450px;
+    line-height: 20px
+}
+
+.card .card-body-title {
+    font-weight: 500;
+    font-size: 20px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 100%;
+}
+
+.card .card-body-album {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 100%;
+    font-size: 15px;
+}
+
+.card .card-body-artist {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 100%;
+    font-size: 15px;
+}
+
+.card .card-body-progressbar {
+    display: block;
+    width: 100%;
+    background-color: #ebebeb;
+    height: 3px;
+    border-radius: 3px;
+    overflow: hidden;
+    position: relative;
+}
+
+.card .card-body-progressbar-inner {
+    display: block;
+    background-color: #2377e4;
+    width: 0px;
+    height: 3px;
+    position: relative;
+    top: -3px;
+    border-radius: 3px;
+    transition: .5s ease-in-out;
+}
+
+.card-body-time {
+    width: 100%;
+    position: relative;
+    top: -10px
+}
+
+.card-body-time span {
+    font-size: 12px;
+    color: #ccc;
+    text-align: right;
+    display: block;
+}
+
+.controls .material-icons {
+    font-size: 25px;
+    width: 25px;
+    height: 25px;
+    display: inline-block;
+    margin-right: 5px;
+    cursor: pointer;
+}
+
+.controls {
+    text-align: center;
+    width: 100px;
+    position: absolute;
+    bottom: 105px;
+    height: 25px;
+    overflow: hidden;
+}
+
+
+.hidden {
+    left: -500px;
+}
